@@ -2,34 +2,57 @@
 
 Vagrant.configure('2') do |config|
     config.vm.box = 'azure'
+    config.vm.box_url = 'https://github.com/msopentech/vagrant-azure/raw/master/dummy.box'
+
+    config.ssh.username         = 'vagrant'
+    config.ssh.private_key_path = File.expand_path('~/.ssh/azure.pem')
 
     config.vm.provider :azure do |azure, override|
         # Mandatory Settings
-        azure.mgmt_certificate = 'YOUR AZURE MANAGEMENT CERTIFICATE'
+        azure.mgmt_certificate = File.expand_path('~/.ssh/azure.pem')
         azure.mgmt_endpoint = 'https://management.core.windows.net'
         azure.subscription_id = ENV["AZURE_SUBSCRIPTION_ID"]
-        azure.vm_image = 'NAME OF THE IMAGE TO USE'
-        azure.vm_name = 'PROVIDE A NAME FOR YOUR VIRTUAL MACHINE' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
 
-        # vm_password is optional when specifying the private_key_file with Linux VMs
-        # When building a Windows VM and using WinRM this setting is used to authenticate via WinRM (PowerShell Remoting)
-        azure.vm_password = 'PROVIDE A VALID PASSWORD' # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
+        azure.cloud_service_name = 'azurevagrant'
+        azure.storage_acct_name  = 'azurevagrantstorage'
+        azure.deployment_name    = 'azurevagrantdeployment'
 
-        # Optional Settings
-        azure.storage_acct_name = 'NAME OF YOUR STORAGE ACCOUNT' # optional. A new one will be generated if not provided.
-        azure.vm_user = 'PROVIDE A USERNAME' # defaults to 'vagrant' if not provided
-        azure.cloud_service_name = 'PROVIDE A NAME FOR YOUR CLOUD SERVICE' # same as vm_name. leave blank to auto-generate
-        azure.deployment_name = 'PROVIDE A NAME FOR YOUR DEPLOYMENT' # defaults to cloud_service_name
-        azure.vm_location = 'PROVIDE A LOCATION FOR VM' # e.g., West US
+        azure.vm_name     = 'azurevagrantsmall'
+        azure.vm_image    = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_2-LTS-amd64-server-20150506-en-us-30GB'
+        azure.vm_size     = 'Small'
+        azure.vm_location = 'East US'
 
-        # Optional *Nix Settings
-        azure.ssh_port = 'A VALID PUBLIC PORT' # defaults to 22
-        azure.private_key_file = 'Path to your ssh private key file (~/.ssh/id_rsa) to use for passwordless auth. If the id_rsa file is password protected, you will be prompted for the password.'
+        azure.ssh_port             = '22'
+        azure.ssh_private_key_file = File.expand_path('~/.ssh/azure.pem')
 
-        # Optional Windows Settings
-        azure.winrm_transport = [ 'http', 'https' ] # this will open up winrm ports on both http (5985) and http (5986) ports
-        azure.winrm_https_port = 'A VALID PUBLIC PORT' # customize the winrm https port, instead of 5986
-        azure.winrm_http_port = 'A VALID PUBLIC PORT' # customize the winrm http port, insted of 5985
-        azure.tcp_endpoints = '3389:53389' # opens the Remote Desktop internal port that listens on public port 53389. Without this, you cannot RDP to a Windows VM.
+        azure.tcp_endpoints = '8000'
+
+        azure.vm_user = 'namabile' # defaults to 'vagrant' if not provided
+
     end
+
+    config.vm.provision "chef_solo" do |chef|
+      chef.add_recipe "apt"
+      chef.add_recipe "ubuntu"
+      chef.add_recipe "omnibus_updater"
+      chef.add_recipe "build-essential"
+      chef.add_recipe "networking_basic"
+      chef.add_recipe "ntp"
+      chef.add_recipe "git"
+      chef.add_recipe "rvm"
+      chef.add_recipe "rvm::system"
+      chef.add_recipe "rvm::vagrant"
+      chef.add_recipe "rvm::user"
+      chef.add_recipe "mono"
+      chef.add_recipe "fsharp"
+
+      chef.json = {
+        "rvm" => {
+          "namabile" => {
+            "rubies" => ["stable"]
+          }
+        }
+      }
+    end
+
 end
