@@ -4,6 +4,7 @@ Vagrant.configure('2') do |config|
     config.vm.box = 'azure'
     config.vm.box_url = 'https://github.com/msopentech/vagrant-azure/raw/master/dummy.box'
 
+    config.vm.boot_timeout = 600
     config.ssh.username = 'namabile'
     config.ssh.private_key_path = File.expand_path('~/.ssh/azure.pem')
 
@@ -30,7 +31,6 @@ Vagrant.configure('2') do |config|
     config.vm.provision "chef_solo" do |chef|
       chef.add_recipe "apt"
       chef.add_recipe "ubuntu"
-      chef.add_recipe "omnibus_updater"
       chef.add_recipe "build-essential"
       chef.add_recipe "networking_basic"
       chef.add_recipe "ntp"
