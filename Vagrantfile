@@ -4,7 +4,7 @@ Vagrant.configure('2') do |config|
     config.vm.box = 'azure'
     config.vm.box_url = 'https://github.com/msopentech/vagrant-azure/raw/master/dummy.box'
 
-    config.ssh.username         = 'vagrant'
+    config.ssh.username = 'namabile'
     config.ssh.private_key_path = File.expand_path('~/.ssh/azure.pem')
 
     config.vm.provider :azure do |azure, override|
@@ -13,12 +13,12 @@ Vagrant.configure('2') do |config|
         azure.mgmt_endpoint = 'https://management.core.windows.net'
         azure.subscription_id = ENV["AZURE_SUBSCRIPTION_ID"]
 
-        azure.vm_name     = 'dev'
-        azure.vm_image    = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_2-LTS-amd64-server-20150506-en-us-30GB'
-        azure.vm_size     = 'Small'
+        azure.vm_name = 'dev'
+        azure.vm_image = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_2-LTS-amd64-server-20150506-en-us-30GB'
+        azure.vm_size = 'Small'
         azure.vm_location = 'East US'
 
-        azure.ssh_port             = '22'
+        azure.ssh_port = '22'
         azure.ssh_private_key_file = File.expand_path('~/.ssh/azure.pem')
 
         azure.tcp_endpoints = '8000'
