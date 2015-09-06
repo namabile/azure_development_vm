@@ -14,7 +14,6 @@ DEPENDENCIES
     git: git://github.com/martinisoft/chef-rvm.git
     revision: 08ec265f277e112a5a2e4b201bd32ddfe1bb968c
   ubuntu
-  vim_config
 
 GRAPH
   apt (2.8.2)
@@ -30,27 +29,17 @@ GRAPH
     windows (>= 0.0.0)
     yum-epel (>= 0.0.0)
   java (1.35.0)
-  mercurial (2.0.4)
-    build-essential (>= 0.0.0)
-    python (>= 0.0.0)
-    windows (>= 0.0.0)
   mono (0.0.5)
     apt (>= 0.0.0)
     build-essential (>= 0.0.0)
     git (>= 0.0.0)
     yum (>= 0.0.0)
   ntp (1.8.6)
-  python (1.4.6)
-    build-essential (>= 0.0.0)
-    yum-epel (>= 0.0.0)
   rvm (0.10.1)
     chef_gem (>= 0.0.0)
     java (>= 0.0.0)
   ubuntu (1.1.8)
     apt (>= 0.0.0)
-  vim_config (2.1.0)
-    git (>= 0.0.0)
-    mercurial (>= 0.0.0)
   windows (1.38.1)
     chef_handler (>= 0.0.0)
   yum (3.7.0)

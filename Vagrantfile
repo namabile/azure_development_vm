@@ -39,8 +39,7 @@ Vagrant.configure('2') do |config|
       chef.add_recipe "rvm::user"
       chef.add_recipe "mono"
       chef.add_recipe "fsharp"
-      chef.add_recipe "vim_config"
-      chef.add_recipe "dotfiles::default"
+      chef.add_recipe "dotfiles"
       chef.add_recipe "dotfiles::vundle_install"
 
       chef.json = {
@@ -52,9 +51,6 @@ Vagrant.configure('2') do |config|
         # prevents rvm from clashing with chef-solo
         :vagrant => {
           :system_chef_solo => '/opt/chef/bin/chef-solo'
-        },
-        "vim_config" => {
-          "plugin_manager" => "vundle"
         },
         :dotfiles => {
           :users => [
