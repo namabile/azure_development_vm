@@ -40,7 +40,6 @@ Vagrant.configure('2') do |config|
       chef.add_recipe "mono"
       chef.add_recipe "fsharp"
       chef.add_recipe "dotfiles"
-      chef.add_recipe "dotfiles::vundle_install"
 
       chef.json = {
         "rvm" => {
