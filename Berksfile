@@ -1,0 +1,12 @@
+source "https://supermarket.chef.io"
+
+cookbook "apt"
+cookbook "ubuntu"
+cookbook "build-essential"
+cookbook "ntp"
+cookbook "git"
+cookbook "rvm", github: "martinisoft/chef-rvm"
+cookbook "mono", github: "Youscribe/cookbook-mono"
+cookbook "fsharp", path: "~/development/cookbooks/fsharp"
+cookbook "vim_config"
+cookbook "dotfiles", path: "~/development/cookbooks/dotfiles"

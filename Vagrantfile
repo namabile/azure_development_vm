@@ -8,6 +8,8 @@ Vagrant.configure('2') do |config|
     config.ssh.username = 'namabile'
     config.ssh.private_key_path = File.expand_path('~/.ssh/azure.pem')
 
+    config.omnibus.chef_version = :latest
+
     config.vm.provider :azure do |azure, override|
         # Mandatory Settings
         azure.mgmt_certificate = File.expand_path('~/.ssh/azure.pem')
@@ -32,21 +34,36 @@ Vagrant.configure('2') do |config|
       chef.add_recipe "apt"
       chef.add_recipe "ubuntu"
       chef.add_recipe "build-essential"
-      chef.add_recipe "networking_basic"
       chef.add_recipe "ntp"
       chef.add_recipe "git"
-      chef.add_recipe "rvm"
-      chef.add_recipe "rvm::system"
-      chef.add_recipe "rvm::vagrant"
       chef.add_recipe "rvm::user"
       chef.add_recipe "mono"
       chef.add_recipe "fsharp"
+      chef.add_recipe "vim_config"
+      chef.add_recipe "dotfiles::default"
+      chef.add_recipe "dotfiles::vundle_install"
 
       chef.json = {
         "rvm" => {
           "namabile" => {
             "rubies" => ["stable"]
           }
+        },
+        # prevents rvm from clashing with chef-solo
+        :vagrant => {
+          :system_chef_solo => '/opt/chef/bin/chef-solo'
+        },
+        "vim_config" => {
+          "plugin_manager" => "vundle"
+        },
+        :dotfiles => {
+          :users => [
+            {
+              :user_name => "namabile",
+              :git_url => "https://github.com/namabile/dotfiles.git",
+              :files_to_use => [".tmux.conf", ".vimrc", ".gitconfig", ".bashrc", "git/git-prompt.sh", "git/git-completion.bash"]
+            }
+          ]
         }
       }
     end
