@@ -95,7 +95,7 @@ Vagrant.configure('2') do |config|
           chef.add_recipe "mono"
           chef.add_recipe "fsharp"
           chef.add_recipe "dotfiles"
-          chef.add_recipe "apache_spark"
+          chef.add_recipe "apache_spark::spark-install"
           chef.add_recipe "scala"
           chef.add_recipe "anaconda"
 
