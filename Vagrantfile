@@ -67,6 +67,8 @@ Vagrant.configure('2') do |config|
           chef.add_recipe "mono"
           chef.add_recipe "fsharp"
           chef.add_recipe "dotfiles"
+          chef.add_recipe "scala"
+          chef.add_recipe "anaconda"
 
           chef.json = default_json
         end
@@ -89,7 +91,8 @@ Vagrant.configure('2') do |config|
           chef.add_recipe "fsharp"
           chef.add_recipe "dotfiles"
           chef.add_recipe "apache_spark"
-          chef.add_reipe "scala"
+          chef.add_recipe "scala"
+          chef.add_recipe "anaconda"
 
           chef.json = default_json.merge({
             :apache_spark => {
