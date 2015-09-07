@@ -48,6 +48,10 @@ Vagrant.configure('2') do |config|
             :files_to_use => [".tmux.conf", ".vimrc", ".gitconfig", ".bashrc", "git/git-prompt.sh", "git/git-completion.bash"]
           }
         ]
+      },
+      :anaconda => {
+        :owner => "namabile",
+        :group => "namabile"
       }
     }
 
