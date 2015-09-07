@@ -34,8 +34,7 @@ Vagrant.configure('2') do |config|
       "rvm" => {
         "namabile" => {
           "rubies" => ["stable"]
-        },
-        "compile_time" => false
+        }
       },
       # prevents rvm from clashing with chef-solo
       :vagrant => {
@@ -97,7 +96,7 @@ Vagrant.configure('2') do |config|
           chef.json = default_json.merge({
             :apache_spark => {
               :download_url => "http://www.apache.org/dyn/closer.lua/spark/spark-1.4.1/spark-1.4.1.tgz",
-              :checksum => "73E311070B74C23D680935C979AEB3D7B04E6D4CFEBDB5511E7B5E8A985EEE32D73221FF3257D4A0E3AC948F899BDA2D713FA8A340D123FE30F4FDC67C9B132D"
+              :checksum => "73e311070b74c23d680935c979aeb3d7b04e6d4cfebdb5511e7b5e8a985eee32d73221ff3257d4a0e3ac948f899bda2d713fa8a340d123fe30f4fdc67c9b132d"
             }
           })
         end
