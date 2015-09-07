@@ -52,7 +52,8 @@ Vagrant.configure('2') do |config|
       :anaconda => {
         :owner => "namabile",
         :group => "namabile",
-        :flavor => "x86_64"
+        :flavor => "x86_64",
+        :accept_license => "yes"
       }
     }
 
