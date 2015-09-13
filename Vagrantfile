@@ -22,44 +22,45 @@ Vagrant.configure('2') do |config|
       azure.ssh_port = '22'
       azure.ssh_private_key_file = File.expand_path('~/.ssh/azure.pem')
 
-      azure.tcp_endpoints = '8000'
       azure.vm_virtual_network_name = "dev-network"
+      azure.cloud_service_name = "dev-cloud-service"
 
       azure.vm_user = 'namabile'
 
     end
 
-    config.vm.define 'dev' do |cfg|
-      cfg.vm.network "private_network", ip: "10.0.0.10"
-      cfg.vm.provider :azure do |azure, override|
-        do_common_azure_stuff.call azure, override
-        azure.vm_name = 'dev'
-        config.vm.provision "chef_zero" do |chef|
-          chef.roles_path = "roles"
-          chef.add_role("base")
-          chef.add_role("fsharp")
-        end
-      end
-    end
+    #config.vm.define 'dev' do |cfg|
+      #cfg.vm.network "private_network", ip: "10.0.0.10"
+      #cfg.vm.provider :azure do |azure, override|
+        #do_common_azure_stuff.call azure, override
+        #azure.vm_name = 'dev'
+        #config.vm.provision "chef_zero" do |chef|
+          #chef.roles_path = "roles"
+          #chef.add_role("base")
+          #chef.add_role("fsharp")
+        #end
+      #end
+    #end
 
-    config.vm.define 'eventstore' do |cfg|
-      cfg.vm.network "private_network", ip: "10.0.0.20"
-      cfg.vm.provider :azure do |azure, override|
-        do_common_azure_stuff.call azure, override
-        azure.vm_size = "small"
-        azure.vm_name = 'eventstore'
-        config.vm.provision "chef_zero" do |chef|
-          chef.roles_path = "roles"
-          chef.add_role("eventstore")
-        end
-      end
-    end
+    #config.vm.define 'eventstore' do |cfg|
+      #cfg.vm.network "private_network", ip: "10.0.0.20"
+      #cfg.vm.provider :azure do |azure, override|
+        #do_common_azure_stuff.call azure, override
+        #azure.vm_size = "small"
+        #azure.vm_name = 'eventstore'
+        #config.vm.provision "chef_zero" do |chef|
+          #chef.roles_path = "roles"
+          #chef.add_role("eventstore")
+        #end
+      #end
+    #end
 
     config.vm.define 'hadoop_nn' do |cfg|
       cfg.vm.network "private_network", ip: "10.0.0.30"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
-        azure.vm_size = "large"
+        azure.storage_acct_name = "hadoopnn"
+        azure.vm_size = "Large"
         azure.vm_name = 'hadoop-nn'
         azure.tcp_endpoints = "50070, 50030, 50060"
         config.vm.provision "chef_zero" do |chef|
@@ -74,9 +75,9 @@ Vagrant.configure('2') do |config|
       cfg.vm.network "private_network", ip: "10.0.0.40"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
-        azure.vm_size = "large"
+        azure.storage_acct_name = "hadoopdn"
+        azure.vm_size = "Large"
         azure.vm_name = 'hadoop-dn'
-        azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
         config.vm.provision "chef_zero" do |chef|
           chef.roles_path = "roles"
           chef.add_role("hadoop_dn")
@@ -84,19 +85,18 @@ Vagrant.configure('2') do |config|
     end
   end
 
-  config.vm.define 'spark' do |cfg|
-    cfg.vm.network "private_network", ip: "10.0.0.50"
-    cfg.vm.provider :azure do |azure, override|
-      do_common_azure_stuff.call azure, override
-      azure.vm_size = "large"
-      azure.vm_name = 'spark'
-      azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
-      config.vm.provision "chef_zero" do |chef|
-        chef.roles_path = "roles"
-        chef.add_role("spark")
-      end
-    end
-  end
+  #config.vm.define 'spark' do |cfg|
+    #cfg.vm.network "private_network", ip: "10.0.0.50"
+    #cfg.vm.provider :azure do |azure, override|
+      #do_common_azure_stuff.call azure, override
+      #azure.vm_size = "Large"
+      #azure.vm_name = 'spark'
+      #config.vm.provision "chef_zero" do |chef|
+        #chef.roles_path = "roles"
+        #chef.add_role("spark")
+      #end
+    #end
+  #end
 
 end
 
