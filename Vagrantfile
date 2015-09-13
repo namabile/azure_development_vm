@@ -35,7 +35,7 @@ Vagrant.configure('2') do |config|
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
         azure.vm_name = 'dev'
-        config.vm.provision "chef_solo" do |chef|
+        config.vm.provision "chef_zero" do |chef|
           chef.roles_path = "roles"
           chef.add_role("base")
           chef.add_role("fsharp")
@@ -48,7 +48,7 @@ Vagrant.configure('2') do |config|
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
         azure.vm_name = 'eventstore'
-        config.vm.provision "chef_solo" do |chef|
+        config.vm.provision "chef_zero" do |chef|
           chef.roles_path = "roles"
           chef.add_role("eventstore")
         end
@@ -60,8 +60,8 @@ Vagrant.configure('2') do |config|
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
         azure.vm_name = 'hadoop-nn'
-        azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
-        config.vm.provision "chef_solo" do |chef|
+        azure.tcp_endpoints = "50070, 50030, 50060"
+        config.vm.provision "chef_zero" do |chef|
           chef.roles_path = "roles"
           chef.add_role("hadoop_nn")
           chef.add_role("hadoop_dn")
@@ -75,7 +75,7 @@ Vagrant.configure('2') do |config|
         do_common_azure_stuff.call azure, override
         azure.vm_name = 'hadoop-dn'
         azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
-        config.vm.provision "chef_solo" do |chef|
+        config.vm.provision "chef_zero" do |chef|
           chef.roles_path = "roles"
           chef.add_role("hadoop_dn")
       end
@@ -89,7 +89,7 @@ Vagrant.configure('2') do |config|
       azure.vm_size = "large"
       azure.vm_name = 'spark'
       azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
-      config.vm.provision "chef_solo" do |chef|
+      config.vm.provision "chef_zero" do |chef|
         chef.roles_path = "roles"
         chef.add_role("spark")
       end

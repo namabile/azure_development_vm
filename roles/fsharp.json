@@ -1,0 +1,12 @@
+{
+    "name": "fsharp",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "description": "for machines that require the fsharp language",
+    "run_list": [
+        "recipe[mono]",
+        "recipe[fsharp]"
+    ]
+}
+
+
