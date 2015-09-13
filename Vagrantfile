@@ -17,7 +17,6 @@ Vagrant.configure('2') do |config|
       azure.subscription_id = ENV["AZURE_SUBSCRIPTION_ID"]
 
       azure.vm_image = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_2-LTS-amd64-server-20150506-en-us-30GB'
-      azure.vm_size = 'Small'
       azure.vm_location = 'East US'
 
       azure.ssh_port = '22'
@@ -47,6 +46,7 @@ Vagrant.configure('2') do |config|
       cfg.vm.network "private_network", ip: "10.0.0.20"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
+        azure.vm_size = "small"
         azure.vm_name = 'eventstore'
         config.vm.provision "chef_zero" do |chef|
           chef.roles_path = "roles"
@@ -59,6 +59,7 @@ Vagrant.configure('2') do |config|
       cfg.vm.network "private_network", ip: "10.0.0.30"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
+        azure.vm_size = "large"
         azure.vm_name = 'hadoop-nn'
         azure.tcp_endpoints = "50070, 50030, 50060"
         config.vm.provision "chef_zero" do |chef|
@@ -73,6 +74,7 @@ Vagrant.configure('2') do |config|
       cfg.vm.network "private_network", ip: "10.0.0.40"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
+        azure.vm_size = "large"
         azure.vm_name = 'hadoop-dn'
         azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
         config.vm.provision "chef_zero" do |chef|

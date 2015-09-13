@@ -9,8 +9,8 @@
     ],
     "override_attributes": {
         "apache_spark": {
-            "download_url": "http://www.apache.org/dist/spark/spark-1.5.0/spark-1.5.0-bin-hadoop2.6.tgz",
-            "checksum": "d8d8ac357b9e4198dad33042f46b1bc09865105051ffbd7854ba272af726dffc"
+            "download_url": "http://www.apache.org/dist/spark/spark-1.5.0/spark-1.5.0.tgz",
+            "checksum": "e6da4e93627615d5f8f184749034732c88e294d35efb319de3b846318c59a06c"
         }
     }
 }
