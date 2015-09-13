@@ -13,7 +13,7 @@
             "distribution": "cdh",
             "distribution_version": "5.4",
             "core_site": {
-                "fs.defaultFS": "hdfs://hadoop-nn-service-rjkwv.cloudapp.net"
+                "fs.defaultFS": "hdfs://hadoop-nn.hadoop-nn-service-rjkwv.b4.internal.cloudapp.net"
             }
         }
     }
