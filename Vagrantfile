@@ -26,43 +26,9 @@ Vagrant.configure('2') do |config|
       azure.tcp_endpoints = '8000'
       azure.vm_virtual_network_name = "dev-network"
 
-      azure.vm_user = 'namabile' # defaults to 'vagrant' if not provided
+      azure.vm_user = 'namabile'
 
     end
-
-    default_json = {
-      "rvm" => {
-        "namabile" => {
-          "rubies" => ["stable"]
-        }
-      },
-      # prevents rvm from clashing with chef-solo
-      :vagrant => {
-        :system_chef_solo => '/opt/chef/bin/chef-solo'
-      },
-      :dotfiles => {
-        :users => [
-          {
-            :user_name => "namabile",
-            :git_url => "https://github.com/namabile/dotfiles.git",
-            :files_to_use => [".tmux.conf", ".vimrc", ".gitconfig", ".bashrc", "git/git-prompt.sh", "git/git-completion.bash"]
-          }
-        ]
-      },
-      :anaconda => {
-        :owner => "namabile",
-        :group => "namabile",
-        :flavor => "x86_64",
-        :accept_license => "yes"
-      },
-      :java => {
-        :install_flavor => "oracle",
-        :jdk_version => "7",
-        :oracle => {
-              "accept_oracle_download_terms" => true
-          }
-        }
-    }
 
     config.vm.define 'dev' do |cfg|
       cfg.vm.network "private_network", ip: "10.0.0.10"
@@ -70,138 +36,61 @@ Vagrant.configure('2') do |config|
         do_common_azure_stuff.call azure, override
         azure.vm_name = 'dev'
         config.vm.provision "chef_solo" do |chef|
-          chef.add_recipe "apt"
-          chef.add_recipe "ubuntu"
-          chef.add_recipe "build-essential"
-          chef.add_recipe "ntp"
-          chef.add_recipe "git"
-          chef.add_recipe "rvm::user"
-          chef.add_recipe "java"
-          chef.add_recipe "scala"
-          chef.add_recipe "simple-scala-sbt"
-          chef.add_recipe "anaconda"
-          chef.add_recipe "mono"
-          chef.add_recipe "fsharp"
-          chef.add_recipe "dotfiles"
-
-          chef.json = default_json
-        end
-      end
-    end
-
-    config.vm.define 'spark' do |cfg|
-      cfg.vm.network "private_network", ip: "10.0.0.20"
-      cfg.vm.provider :azure do |azure, override|
-        do_common_azure_stuff.call azure, override
-        azure.vm_size = "large"
-        azure.vm_name = 'spark'
-        azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
-        config.vm.provision "chef_solo" do |chef|
-          chef.add_recipe "apt"
-          chef.add_recipe "ubuntu"
-          chef.add_recipe "build-essential"
-          chef.add_recipe "ntp"
-          chef.add_recipe "git"
-          chef.add_recipe "rvm::user"
-          chef.add_recipe "java"
-          chef.add_recipe "scala"
-          chef.add_recipe "simple-scala-sbt"
-          chef.add_recipe "anaconda"
-          chef.add_recipe "mono"
-          chef.add_recipe "fsharp"
-          chef.add_recipe "dotfiles"
-          chef.add_recipe "apache_spark::spark-standalone-master"
-          chef.add_recipe "apache_spark::spark-standalone-worker"
-
-          chef.json = default_json.merge({
-            :apache_spark => {
-              :download_url => "http://www.apache.org/dist/spark/spark-1.5.0/spark-1.5.0-bin-hadoop2.6.tgz",
-              :checksum => "d8d8ac357b9e4198dad33042f46b1bc09865105051ffbd7854ba272af726dffc"
-            }
-          })
+          chef.roles_path = "roles"
+          chef.add_role("base")
+          chef.add_role("fsharp")
         end
       end
     end
 
     config.vm.define 'eventstore' do |cfg|
-      cfg.vm.network "private_network", ip: "10.0.0.30"
+      cfg.vm.network "private_network", ip: "10.0.0.20"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
         azure.vm_name = 'eventstore'
         config.vm.provision "chef_solo" do |chef|
-          chef.add_recipe "apt"
-          chef.add_recipe "ubuntu"
-          chef.add_recipe "build-essential"
-          chef.add_recipe "ntp"
-          chef.add_recipe "git"
-          chef.add_recipe "rvm::user"
-          chef.add_recipe "java"
-          chef.add_recipe "scala"
-          chef.add_recipe "simple-scala-sbt"
-          chef.add_recipe "anaconda"
-          chef.add_recipe "mono"
-          chef.add_recipe "fsharp"
-          chef.add_recipe "dotfiles"
-          chef.add_recipe "eventstore"
-
-          chef.json = default_json.merge({
-            :eventstore => {
-              :source_uri => "http://download.geteventstore.com/binaries/EventStore-OSS-Ubuntu-v3.2.0.tar.gz"
-            }
-          })
+          chef.roles_path = "roles"
+          chef.add_role("eventstore")
         end
       end
     end
 
     config.vm.define 'hadoop_nn' do |cfg|
-      cfg.vm.network "private_network", ip: "10.0.0.40"
+      cfg.vm.network "private_network", ip: "10.0.0.30"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
         azure.vm_name = 'hadoop-nn'
         azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
         config.vm.provision "chef_solo" do |chef|
-          chef.add_recipe "apt"
-          chef.add_recipe "ubuntu"
-          chef.add_recipe "build-essential"
-          chef.add_recipe "ntp"
-          chef.add_recipe "git"
-          chef.add_recipe "rvm::user"
-          chef.add_recipe "java"
-          chef.add_recipe "scala"
-          chef.add_recipe "simple-scala-sbt"
-          chef.add_recipe "anaconda"
-          chef.add_recipe "dotfiles"
-          chef.add_recipe "hadoop_cookbook::hadoop_hdfs_namenode"
-          chef.add_recipe "hadoop_cookbook::hadoop_hdfs_datanode"
-          chef.add_recipe "hadoop_cookbook::hadoop_yarn_nodemanager"
-          chef.add_recipe "hadoop_cookbook::hadoop_yarn_resourcemanager"
-
-          chef.json = default_json
+          chef.roles_path = "roles"
+          chef.add_role("hadoop_nn")
         end
       end
     end
 
     config.vm.define 'hadoop_dn' do |cfg|
-      cfg.vm.network "private_network", ip: "10.0.0.50"
+      cfg.vm.network "private_network", ip: "10.0.0.40"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
         azure.vm_name = 'hadoop-dn'
         azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
         config.vm.provision "chef_solo" do |chef|
-          chef.add_recipe "apt"
-          chef.add_recipe "ubuntu"
-          chef.add_recipe "build-essential"
-          chef.add_recipe "ntp"
-          chef.add_recipe "git"
-          chef.add_recipe "rvm::user"
-          chef.add_recipe "java"
-          chef.add_recipe "scala"
-          chef.add_recipe "simple-scala-sbt"
-          chef.add_recipe "anaconda"
-          chef.add_recipe "dotfiles"
-          chef.add_recipe "hadoop_cookbook::hadoop_hdfs_datanode"
+          chef.roles_path = "roles"
+          chef.add_role("hadoop_nn")
+      end
+    end
+  end
 
-          chef.json = default_json
+  config.vm.define 'spark' do |cfg|
+    cfg.vm.network "private_network", ip: "10.0.0.50"
+    cfg.vm.provider :azure do |azure, override|
+      do_common_azure_stuff.call azure, override
+      azure.vm_size = "large"
+      azure.vm_name = 'spark'
+      azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
+      config.vm.provision "chef_solo" do |chef|
+        chef.roles_path = "roles"
+        chef.add_role("spark")
       end
     end
   end
