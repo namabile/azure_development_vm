@@ -56,8 +56,12 @@ Vagrant.configure('2') do |config|
         :accept_license => "yes"
       },
       :java => {
-        :jdk_version => "7"
-      }
+        :install_flavor => "oracle",
+        :jdk_version => "7",
+        :oracle => {
+              "accept_oracle_download_terms" => true
+          }
+        }
     }
 
     config.vm.define 'dev' do |cfg|
