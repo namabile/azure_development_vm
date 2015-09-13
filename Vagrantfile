@@ -10,7 +10,7 @@ Vagrant.configure('2') do |config|
 
     config.omnibus.chef_version = :latest
 
-    do_common_azure_stuff = Proc.new do |azure, override|
+    do_common_azure_stuff = Proc.new do |azure|
 
       azure.mgmt_certificate = File.expand_path('~/.ssh/azure.pem')
       azure.mgmt_endpoint = 'https://management.core.windows.net'
@@ -23,7 +23,6 @@ Vagrant.configure('2') do |config|
       azure.ssh_private_key_file = File.expand_path('~/.ssh/azure.pem')
 
       azure.vm_virtual_network_name = "dev-network"
-      azure.cloud_service_name = "dev-cloud-service"
 
       azure.vm_user = 'namabile'
 
@@ -56,9 +55,8 @@ Vagrant.configure('2') do |config|
     #end
 
     config.vm.define 'hadoop_nn' do |cfg|
-      cfg.vm.network "private_network", ip: "10.0.0.30"
-      cfg.vm.provider :azure do |azure, override|
-        do_common_azure_stuff.call azure, override
+      cfg.vm.provider :azure do |azure|
+        do_common_azure_stuff.call azure
         azure.storage_acct_name = "hadoopnn"
         azure.vm_size = "Large"
         azure.vm_name = 'hadoop-nn'
@@ -72,9 +70,8 @@ Vagrant.configure('2') do |config|
     end
 
     config.vm.define 'hadoop_dn' do |cfg|
-      cfg.vm.network "private_network", ip: "10.0.0.40"
-      cfg.vm.provider :azure do |azure, override|
-        do_common_azure_stuff.call azure, override
+      cfg.vm.provider :azure do |azure|
+        do_common_azure_stuff.call azure
         azure.storage_acct_name = "hadoopdn"
         azure.vm_size = "Large"
         azure.vm_name = 'hadoop-dn'
