@@ -5,7 +5,7 @@
     "description": "for systems in the spark cluster",
     "run_list": [
         "role[base]",
-        "recipe[spark::install_spark]"
+        "recipe[apache_spark::spark_install]"
     ],
     "override_attributes": {
         "apache_spark": {

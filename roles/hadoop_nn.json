@@ -11,7 +11,8 @@
     ],
     "override_attributes": {
         "hadoop": {
-            "distribution": "cdh"
+            "distribution": "cdh",
+            "distribution_version": "5.4"
         }
     }
 }
