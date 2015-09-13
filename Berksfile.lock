@@ -9,6 +9,8 @@ DEPENDENCIES
   fsharp
     path: ../cookbooks/fsharp
   git
+  hadoop
+  java
   mono
     git: git://github.com/Youscribe/cookbook-mono.git
     revision: b7879ca7090b6b85e608c78c99dc8c0a3367849d
@@ -17,6 +19,7 @@ DEPENDENCIES
     git: git://github.com/martinisoft/chef-rvm.git
     revision: 08ec265f277e112a5a2e4b201bd32ddfe1bb968c
   scala
+  simple-scala-sbt
   ubuntu
 
 GRAPH
@@ -50,6 +53,13 @@ GRAPH
     dmg (>= 0.0.0)
     windows (>= 0.0.0)
     yum-epel (>= 0.0.0)
+  hadoop (2.0.7)
+    apt (>= 0.0.0)
+    java (~> 1.21)
+    selinux (>= 0.0.0)
+    sysctl (>= 0.0.0)
+    ulimit (>= 0.0.0)
+    yum (>= 3.0)
   java (1.35.0)
   logrotate (1.9.2)
   monit-ng (2.1.0)
@@ -69,6 +79,7 @@ GRAPH
     yum (>= 0.0.0)
   notifying-action (1.0.3)
   ntp (1.8.6)
+  ohai (2.0.1)
   packagecloud (0.0.19)
   runit (1.7.2)
     packagecloud (>= 0.0.0)
@@ -78,9 +89,15 @@ GRAPH
   scala (2.1.0)
     ark (>= 0.0.0)
     java (>= 0.0.0)
+  selinux (0.9.0)
+  simple-scala-sbt (1.0.0)
+    apt (>= 0.0.0)
+  sysctl (0.6.2)
+    ohai (>= 0.0.0)
   tar (0.7.0)
   ubuntu (1.1.8)
     apt (>= 0.0.0)
+  ulimit (0.3.3)
   windows (1.38.1)
     chef_handler (>= 0.0.0)
   yum (3.7.0)

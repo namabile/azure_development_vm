@@ -54,6 +54,9 @@ Vagrant.configure('2') do |config|
         :group => "namabile",
         :flavor => "x86_64",
         :accept_license => "yes"
+      },
+      :java => {
+        :jdk_version => "7"
       }
     }
 
@@ -69,6 +72,7 @@ Vagrant.configure('2') do |config|
           chef.add_recipe "ntp"
           chef.add_recipe "git"
           chef.add_recipe "rvm::user"
+          chef.add_recipe "java"
           chef.add_recipe "mono"
           chef.add_recipe "fsharp"
           chef.add_recipe "dotfiles"
@@ -84,7 +88,9 @@ Vagrant.configure('2') do |config|
       cfg.vm.network "private_network", ip: "10.0.0.20"
       cfg.vm.provider :azure do |azure, override|
         do_common_azure_stuff.call azure, override
+        azure.vm_size = "large"
         azure.vm_name = 'spark'
+        azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
         config.vm.provision "chef_solo" do |chef|
           chef.add_recipe "apt"
           chef.add_recipe "ubuntu"
@@ -95,14 +101,17 @@ Vagrant.configure('2') do |config|
           chef.add_recipe "mono"
           chef.add_recipe "fsharp"
           chef.add_recipe "dotfiles"
-          chef.add_recipe "apache_spark::spark-install"
           chef.add_recipe "scala"
+          chef.add_recipe "java"
+          chef.add_recipe "simple-scala-sbt"
           chef.add_recipe "anaconda"
+          chef.add_recipe "apache_spark::spark-standalone-master"
+          chef.add_recipe "apache_spark::spark-standalone-worker"
 
           chef.json = default_json.merge({
             :apache_spark => {
-              :download_url => "http://www.apache.org/dist/spark/spark-1.4.1/spark-1.4.1.tgz",
-              :checksum => "934d25fe665d8fc0c9b3417e138b555004286394bcb4f88d10d0255bdf09e290"
+              :download_url => "http://www.apache.org/dist/spark/spark-1.5.0/spark-1.5.0-bin-hadoop2.6.tgz",
+              :checksum => "d8d8ac357b9e4198dad33042f46b1bc09865105051ffbd7854ba272af726dffc"
             }
           })
         end
@@ -121,6 +130,7 @@ Vagrant.configure('2') do |config|
           chef.add_recipe "ntp"
           chef.add_recipe "git"
           chef.add_recipe "rvm::user"
+          chef.add_recipe "java"
           chef.add_recipe "mono"
           chef.add_recipe "fsharp"
           chef.add_recipe "dotfiles"
@@ -132,6 +142,58 @@ Vagrant.configure('2') do |config|
             }
           })
         end
+      end
+    end
+
+    config.vm.define 'hadoop_nn' do |cfg|
+      cfg.vm.network "private_network", ip: "10.0.0.40"
+      cfg.vm.provider :azure do |azure, override|
+        do_common_azure_stuff.call azure, override
+        azure.vm_name = 'hadoop-nn'
+        azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
+        config.vm.provision "chef_solo" do |chef|
+          chef.add_recipe "apt"
+          chef.add_recipe "ubuntu"
+          chef.add_recipe "build-essential"
+          chef.add_recipe "ntp"
+          chef.add_recipe "git"
+          chef.add_recipe "rvm::user"
+          chef.add_recipe "dotfiles"
+          chef.add_recipe "scala"
+          chef.add_recipe "simple-scala-sbt"
+          chef.add_recipe "java"
+          chef.add_recipe "anaconda"
+          chef.add_recipe "hadoop_cookbook::hadoop_hdfs_namenode"
+          chef.add_recipe "hadoop_cookbook::hadoop_hdfs_datanode"
+          chef.add_recipe "hadoop_cookbook::hadoop_yarn_nodemanager"
+          chef.add_recipe "hadoop_cookbook::hadoop_yarn_resourcemanager"
+
+          chef.json = default_json
+        end
+      end
+    end
+
+    config.vm.define 'hadoop_dn' do |cfg|
+      cfg.vm.network "private_network", ip: "10.0.0.50"
+      cfg.vm.provider :azure do |azure, override|
+        do_common_azure_stuff.call azure, override
+        azure.vm_name = 'hadoop-dn'
+        azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
+        config.vm.provision "chef_solo" do |chef|
+          chef.add_recipe "apt"
+          chef.add_recipe "ubuntu"
+          chef.add_recipe "build-essential"
+          chef.add_recipe "ntp"
+          chef.add_recipe "git"
+          chef.add_recipe "rvm::user"
+          chef.add_recipe "dotfiles"
+          chef.add_recipe "scala"
+          chef.add_recipe "simple-scala-sbt"
+          chef.add_recipe "java"
+          chef.add_recipe "anaconda"
+          chef.add_recipe "hadoop_cookbook::hadoop_hdfs_datanode"
+
+          chef.json = default_json
       end
     end
 
