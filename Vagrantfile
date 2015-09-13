@@ -64,6 +64,7 @@ Vagrant.configure('2') do |config|
         config.vm.provision "chef_solo" do |chef|
           chef.roles_path = "roles"
           chef.add_role("hadoop_nn")
+          chef.add_role("hadoop_dn")
         end
       end
     end
@@ -76,7 +77,7 @@ Vagrant.configure('2') do |config|
         azure.tcp_endpoints = "8000, 8080, 7077, 18080, 8081"
         config.vm.provision "chef_solo" do |chef|
           chef.roles_path = "roles"
-          chef.add_role("hadoop_nn")
+          chef.add_role("hadoop_dn")
       end
     end
   end
