@@ -204,5 +204,7 @@ Vagrant.configure('2') do |config|
           chef.json = default_json
       end
     end
+  end
 
 end
+
