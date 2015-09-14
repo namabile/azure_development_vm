@@ -12,7 +12,10 @@
     "override_attributes": {
         "hadoop": {
             "distribution": "cdh",
-            "distribution_version": "5.4"
+            "distribution_version": "5.4",
+            "hdfs-site.xml": {
+                "dfs.namenode.datanode.registration.ip-hostname-check": false 
+            }
         }
     }
 }
