@@ -28,32 +28,6 @@ Vagrant.configure('2') do |config|
 
     end
 
-    #config.vm.define 'dev' do |cfg|
-      #cfg.vm.network "private_network", ip: "10.0.0.10"
-      #cfg.vm.provider :azure do |azure, override|
-        #do_common_azure_stuff.call azure, override
-        #azure.vm_name = 'dev'
-        #config.vm.provision "chef_zero" do |chef|
-          #chef.roles_path = "roles"
-          #chef.add_role("base")
-          #chef.add_role("fsharp")
-        #end
-      #end
-    #end
-
-    #config.vm.define 'eventstore' do |cfg|
-      #cfg.vm.network "private_network", ip: "10.0.0.20"
-      #cfg.vm.provider :azure do |azure, override|
-        #do_common_azure_stuff.call azure, override
-        #azure.vm_size = "small"
-        #azure.vm_name = 'eventstore'
-        #config.vm.provision "chef_zero" do |chef|
-          #chef.roles_path = "roles"
-          #chef.add_role("eventstore")
-        #end
-      #end
-    #end
-
     config.vm.define 'hadoop_nn' do |cfg|
       cfg.vm.provider :azure do |azure|
         do_common_azure_stuff.call azure
@@ -81,6 +55,32 @@ Vagrant.configure('2') do |config|
       end
     end
   end
+
+    #config.vm.define 'dev' do |cfg|
+      #cfg.vm.network "private_network", ip: "10.0.0.10"
+      #cfg.vm.provider :azure do |azure, override|
+        #do_common_azure_stuff.call azure, override
+        #azure.vm_name = 'dev'
+        #config.vm.provision "chef_zero" do |chef|
+          #chef.roles_path = "roles"
+          #chef.add_role("base")
+          #chef.add_role("fsharp")
+        #end
+      #end
+    #end
+
+    #config.vm.define 'eventstore' do |cfg|
+      #cfg.vm.network "private_network", ip: "10.0.0.20"
+      #cfg.vm.provider :azure do |azure, override|
+        #do_common_azure_stuff.call azure, override
+        #azure.vm_size = "small"
+        #azure.vm_name = 'eventstore'
+        #config.vm.provision "chef_zero" do |chef|
+          #chef.roles_path = "roles"
+          #chef.add_role("eventstore")
+        #end
+      #end
+    #end
 
   #config.vm.define 'spark' do |cfg|
     #cfg.vm.network "private_network", ip: "10.0.0.50"
