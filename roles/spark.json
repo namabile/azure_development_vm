@@ -5,14 +5,16 @@
     "description": "for systems in the spark cluster",
     "run_list": [
         "role[base]",
-        "recipe[apache_spark::spark_install]"
+        "recipe[apache_spark::spark-install]",
+        "recipe[spark_wrapper::build_spark]"
     ],
     "override_attributes": {
         "apache_spark": {
             "download_url": "http://www.apache.org/dist/spark/spark-1.5.0/spark-1.5.0.tgz",
-            "checksum": "e6da4e93627615d5f8f184749034732c88e294d35efb319de3b846318c59a06c"
+            "checksum": "e6da4e93627615d5f8f184749034732c88e294d35efb319de3b846318c59a06c",
+            "standalone": {
+                "master_host": "10.32.0.6" 
+            }
         }
     }
 }
-
-

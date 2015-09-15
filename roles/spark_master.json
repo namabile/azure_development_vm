@@ -1,0 +1,11 @@
+{
+    "name": "spark_master",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "description": "for the spark master system in the spark cluster",
+    "run_list": [
+        "role[spark]",
+        "recipe[apache_spark::spark-standalone-master]"
+    ]
+}
+

@@ -1,0 +1,11 @@
+{
+    "name": "spark_worker",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "description": "for worker systems in the spark cluster",
+    "run_list": [
+        "role[spark]",
+        "recipe[apache_spark::spark-standalone-worker]"
+    ]
+}
+

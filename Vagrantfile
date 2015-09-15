@@ -82,18 +82,31 @@ Vagrant.configure('2') do |config|
       #end
     #end
 
-  #config.vm.define 'spark' do |cfg|
-    #cfg.vm.network "private_network", ip: "10.0.0.50"
-    #cfg.vm.provider :azure do |azure, override|
-      #do_common_azure_stuff.call azure, override
-      #azure.vm_size = "Large"
-      #azure.vm_name = 'spark'
-      #config.vm.provision "chef_zero" do |chef|
-        #chef.roles_path = "roles"
-        #chef.add_role("spark")
-      #end
-    #end
-  #end
+  config.vm.define "spark" do |cfg|
+    cfg.vm.provider :azure do |azure, override|
+      do_common_azure_stuff.call azure, override
+      azure.vm_size = "Large"
+      azure.vm_name = 'spark'
+      azure.tcp_endpoints = "18080"
+      config.vm.provision "chef_zero" do |chef|
+        chef.roles_path = "roles"
+        chef.add_role("spark_master")
+      end
+    end
+  end
+
+  config.vm.define 'spark_worker' do |cfg|
+    cfg.vm.provider :azure do |azure, override|
+      do_common_azure_stuff.call azure, override
+      azure.vm_size = "Large"
+      azure.vm_name = 'spark-worker'
+      azure.tcp_endpoints = "8081"
+      config.vm.provision "chef_zero" do |chef|
+        chef.roles_path = "roles"
+        chef.add_role("spark_worker")
+      end
+    end
+  end
 
 end
 
