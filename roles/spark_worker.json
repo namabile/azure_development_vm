@@ -5,7 +5,7 @@
     "description": "for worker systems in the spark cluster",
     "run_list": [
         "role[spark]",
-        "recipe[apache_spark::spark-standalone-worker]"
+        "recipe[spark_wrapper::start_spark_worker]"
     ]
 }
 

@@ -1,0 +1,22 @@
+{
+    "name": "mesos_master",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "description": "for the mesos master system",
+    "run_list": [
+        "role[base]",
+        "recipe[mesos::default]",
+        "recipe[mesos::mesos-master]"
+    ],
+    "override_attributes": {
+        "mesos": {
+            "master": {
+                "port": "5050",
+                "log_dir": "/var/log/mesos",
+                "cluster" : "DevCluster",
+                "quorum": "1"
+            }
+        }
+    }
+}
+

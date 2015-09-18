@@ -1,0 +1,15 @@
+{
+    "name": "tachyon_master",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "description": "role for the tachyon master machine",
+    "run_list": [
+        "role[tachyon]"
+    ],
+    "override_attributes": {
+        "node_ips": ["10.32.0.4", "10.32.0.5"] 
+    }
+}
+
+
+

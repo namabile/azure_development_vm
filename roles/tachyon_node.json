@@ -1,0 +1,13 @@
+{
+    "name": "tachyon_node",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "description": "role for the tachyon node machines",
+    "run_list": [
+        "role[tachyon]"
+    ]
+}
+
+
+
+

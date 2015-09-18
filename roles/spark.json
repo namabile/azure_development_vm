@@ -13,7 +13,8 @@
             "download_url": "http://www.apache.org/dist/spark/spark-1.5.0/spark-1.5.0.tgz",
             "checksum": "e6da4e93627615d5f8f184749034732c88e294d35efb319de3b846318c59a06c",
             "standalone": {
-                "master_host": "10.32.0.6" 
+                "master_bind_ip": "10.32.0.6",
+                "master_host": "10.32.0.6"
             }
         }
     }

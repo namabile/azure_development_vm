@@ -1,0 +1,22 @@
+{
+    "name": "tachyon",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "description": "base role for all tachyon machines",
+    "run_list": [
+        "recipe[tachyon::install]"
+    ],
+    "override_attributes": {
+        "tachyon": {
+            "version": "0.7.1",
+            "distribution": "tachyon-0.7.1-hadoop2.6-bin",
+            "checksum": "9d908ab999c23d21fb4a29c7d70d1c04aae411c24a92d16b870445b0baa1ae50",
+            "master_host": "10.32.0.4",
+            "underfs_address": "hdfs://10.32.0.4" 
+        } 
+    }
+}
+
+
+
+

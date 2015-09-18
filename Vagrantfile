@@ -39,6 +39,8 @@ Vagrant.configure('2') do |config|
           chef.roles_path = "roles"
           chef.add_role("hadoop_nn")
           chef.add_role("hadoop_dn")
+          chef.add_role("tachyon_master")
+          chef.add_role("tachyon_node")
         end
       end
     end
@@ -52,6 +54,7 @@ Vagrant.configure('2') do |config|
         config.vm.provision "chef_zero" do |chef|
           chef.roles_path = "roles"
           chef.add_role("hadoop_dn")
+          chef.add_role("tachyon_node")
       end
     end
   end
@@ -61,10 +64,11 @@ Vagrant.configure('2') do |config|
       do_common_azure_stuff.call azure, override
       azure.vm_size = "Large"
       azure.vm_name = 'spark'
-      azure.tcp_endpoints = "18080"
+      azure.tcp_endpoints = "18080, 5050"
       config.vm.provision "chef_zero" do |chef|
         chef.roles_path = "roles"
         chef.add_role("spark_master")
+        chef.add_role("spark_worker")
       end
     end
   end

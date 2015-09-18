@@ -5,7 +5,7 @@
     "description": "for the spark master system in the spark cluster",
     "run_list": [
         "role[spark]",
-        "recipe[apache_spark::spark-standalone-master]"
+        "recipe[spark_wrapper::start_spark_master]"
     ]
 }
 
