@@ -86,6 +86,18 @@ Vagrant.configure('2') do |config|
     end
   end
 
+  config.vm.define 'kafka' do |cfg|
+    cfg.vm.provider :azure do |azure, override|
+      do_common_azure_stuff.call azure, override
+      azure.vm_size = "Small"
+      azure.vm_name = 'kafka'
+      config.vm.provision "chef_zero" do |chef|
+        chef.roles_path = "roles"
+        chef.add_role("kafka")
+      end
+    end
+  end
+
   #config.vm.define 'dev' do |cfg|
     #cfg.vm.provider :azure do |azure, override|
       #do_common_azure_stuff.call azure, override

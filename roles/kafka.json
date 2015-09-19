@@ -1,0 +1,13 @@
+{
+    "name": "kafka",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "description": "role for kafka nodes",
+    "run_list": [
+        "role[base]",
+        "recipe[zookeeper::default]",
+        "recipe[zookeeper::service]",
+        "recipe[apache_kafka::default]"
+    ]
+}
+
