@@ -40,7 +40,7 @@ Vagrant.configure('2') do |config|
           chef.add_role("hadoop_nn")
           chef.add_role("hadoop_dn")
           chef.add_role("tachyon_master")
-          chef.add_role("tachyon_node")
+          chef.add_role("tachyon_worker")
         end
       end
     end
@@ -54,7 +54,7 @@ Vagrant.configure('2') do |config|
         config.vm.provision "chef_zero" do |chef|
           chef.roles_path = "roles"
           chef.add_role("hadoop_dn")
-          chef.add_role("tachyon_node")
+          chef.add_role("tachyon_worker")
       end
     end
   end

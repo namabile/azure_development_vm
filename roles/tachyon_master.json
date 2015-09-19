@@ -4,10 +4,12 @@
     "json_class": "Chef::Role",
     "description": "role for the tachyon master machine",
     "run_list": [
-        "role[tachyon]"
+        "role[tachyon]",
+        "recipe[tachyon::master_init]",
+        "recipe[tachyon::start]"
     ],
     "override_attributes": {
-        "node_ips": ["10.32.0.4", "10.32.0.5"] 
+        "worker_ips": ["10.32.0.4", "10.32.0.5"] 
     }
 }
 
