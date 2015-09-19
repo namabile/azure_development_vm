@@ -5,7 +5,7 @@
     "description": "role for the tachyon worker machines",
     "run_list": [
         "role[tachyon]",
-        "recipe[tachyon::start]"
+        "recipe[tachyon::start_worker]"
     ]
 }
 
