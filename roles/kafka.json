@@ -8,6 +8,11 @@
         "recipe[zookeeper::default]",
         "recipe[zookeeper::service]",
         "recipe[apache_kafka::default]"
-    ]
+    ],
+    "override_attributes": {
+        "apache_zookeeper": {
+            "service_style": "sysv" 
+        } 
+    }
 }
 
