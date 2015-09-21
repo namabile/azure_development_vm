@@ -18,7 +18,7 @@
     ],
     "default_attributes": {
         "rvm": {
-            "namabile": {
+            "vagrant": {
             "rubies": ["stable"]
             }
         },
@@ -28,24 +28,28 @@
         "dotfiles": {
             "users":  [
             {
-                "user_name": "namabile",
+                "user_name": "vagrant",
                 "git_url": "https://github.com/namabile/dotfiles.git",
                 "files_to_use": [".tmux.conf", ".vimrc", ".gitconfig", ".bashrc", "git/git-prompt.sh", "git/git-completion.bash"]
             }
             ]
         },
         "anaconda": {
-            "owner": "namabile",
-            "group": "namabile",
+            "owner": "vagrant",
+            "group": "vagrant",
             "flavor": "x86_64",
             "accept_license": "yes"
         },
         "java": {
             "install_flavor": "oracle",
-            "jdk_version": "7",
+            "jdk_version": "8",
             "oracle": {
                 "accept_oracle_download_terms": true
             }
+        },
+        "scala": {
+            "version": "2.11.7",
+            "checksum": "ffe4196f13ee98a66cf54baffb0940d29432b2bd820bd0781a8316eec22926d0"
         }
     }
 }
