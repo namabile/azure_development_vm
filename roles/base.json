@@ -14,29 +14,30 @@
         "recipe[scala]",
         "recipe[simple-scala-sbt]",
         "recipe[anaconda]",
+        "recipe[anaconda_wrapper::default]",
         "recipe[dotfiles]"
     ],
     "default_attributes": {
         "rvm": {
-            "vagrant": {
+            "ubuntu": {
             "rubies": ["stable"]
             }
         },
-        "vagrant": {
+        "ubuntu": {
             "system_chef_solo" : "/opt/chef/bin/chef-solo"
         },
         "dotfiles": {
             "users":  [
             {
-                "user_name": "vagrant",
+                "user_name": "ubuntu",
                 "git_url": "https://github.com/namabile/dotfiles.git",
                 "files_to_use": [".tmux.conf", ".vimrc", ".gitconfig", ".bashrc", "git/git-prompt.sh", "git/git-completion.bash"]
             }
             ]
         },
         "anaconda": {
-            "owner": "vagrant",
-            "group": "vagrant",
+            "owner": "ubuntu",
+            "group": "ubuntu",
             "flavor": "x86_64",
             "accept_license": "yes"
         },
@@ -48,8 +49,8 @@
             }
         },
         "scala": {
-            "version": "2.11.7",
-            "checksum": "ffe4196f13ee98a66cf54baffb0940d29432b2bd820bd0781a8316eec22926d0"
+            "version": "2.11.6",
+            "checksum": "41ba45e4600404634217a66d6b2c960459d3a67e0344a7c3d9642d0eaa446583"
         }
     }
 }

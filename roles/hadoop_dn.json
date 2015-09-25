@@ -13,7 +13,7 @@
             "distribution": "cdh",
             "distribution_version": "5.4",
             "core-site": {
-                "fs.defaultFS": "10.32.0.4" 
+                "fs.defaultFS": "localhost" 
             }
         }
     }

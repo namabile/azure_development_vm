@@ -8,9 +8,9 @@
         "recipe[tachyon::master_init]",
         "recipe[tachyon::start_master]"
     ],
-    "override_attributes": {
+    "normal_attributes": {
         "tachyon": {
-            "worker_ips": ["10.32.0.4", "10.32.0.5"] 
+            "worker_ips": ["localhost"] 
         }
     }
 }
